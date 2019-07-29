@@ -28,12 +28,12 @@ namespace Generator.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                .AddFluentValidation(p => p.RegisterValidatorsFromAssemblyContaining<PayloadValidator>());
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddTransient<IValidator<PayloadDto>, PayloadValidator>();
 
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddMediatR(typeof(PayloadHandler));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie();
         }

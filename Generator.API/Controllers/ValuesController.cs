@@ -19,13 +19,23 @@ namespace Generator.API.Controllers
         }
 
         [HttpPost]
-        public async Task<RequestResult> Post([FromBody] PayloadDto request)
-                => await mediator.Send(request);
+        public async Task<IActionResult> Post([FromBody] PayloadDto request)
+        {
+           RequestResult requestResult = await mediator.Send(request);
+           if (requestResult.Success)
+           {
+               return StatusCode(200);
+           }
+           else
+           {
+               return StatusCode(400, requestResult.Message);
+           }
+        }
 
         [HttpGet]
-        public string Get()
+        public IActionResult Get()
         {
-            return "kxdxdd";
+            return StatusCode(403);
         }
     }
 }

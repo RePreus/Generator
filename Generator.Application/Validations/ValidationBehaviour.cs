@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
@@ -10,22 +8,25 @@ using MediatR;
 
 namespace Generator.Application.Validations
 {
-    public class ValidationBehaviour : IPipelineBehavior<PayloadDto, RequestResult>
+    public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+            where TRequest : PayloadDto
+            where TResponse : RequestResult
     {
         private readonly IValidator validator;
 
-        public ValidationBehaviour(IValidator validator)
+        public ValidationBehaviour(IValidator<PayloadDto> validator)
         {
             this.validator = validator;
         }
 
-        public Task<RequestResult> Handle(PayloadDto request, CancellationToken cancellationToken, RequestHandlerDelegate<RequestResult> next)
+        public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
             var result = validator.Validate(request);
 
             if (!result.IsValid)
             {
-                throw new ValidationException(result.Errors);
+                RequestResult response = new RequestResult(false, result.Errors.Select(p => p.ToString()).ToList());
+                return Task.FromResult(response as TResponse);
             }
 
             return next();

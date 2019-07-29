@@ -1,7 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using FluentValidation;
 using Generator.Application.DTOs;
 using Generator.Application.Models;
 using Generator.Domain;
