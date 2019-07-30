@@ -33,8 +33,6 @@ namespace Generator.API
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddMediatR(typeof(ChoiceHandler));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
