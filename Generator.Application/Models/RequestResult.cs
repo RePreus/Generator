@@ -7,14 +7,20 @@ namespace Generator.Application.Models
 {
     public class RequestResult
     {
-        public bool Success { get; set; }
-
-        public List<string> Message { get; set; }
-
-        public RequestResult(bool success = true, List<string> message = null)
+        public RequestResult(List<string> message = null, bool success = true)
         {
             this.Success = success;
             this.Message = message;
         }
+
+        public RequestResult(string message, bool success = true)
+        {
+            this.Success = success;
+            this.Message.Add(message);
+        }
+
+        public bool Success { get; set; }
+
+        public List<string> Message { get; set; }
     }
 }

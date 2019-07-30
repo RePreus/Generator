@@ -19,7 +19,7 @@ namespace Generator.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] PayloadDto request)
+        public async Task<IActionResult> Post([FromBody] ChoiceDto request)
         {
            RequestResult requestResult = await mediator.Send(request);
            if (requestResult.Success)

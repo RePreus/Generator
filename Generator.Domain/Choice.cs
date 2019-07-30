@@ -2,7 +2,7 @@
 
 namespace Generator.Domain
 {
-    public class Payload
+    public class Choice
     {
         public Guid PictureA { get; set; }
 

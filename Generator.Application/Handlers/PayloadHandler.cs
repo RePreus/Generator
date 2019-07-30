@@ -8,7 +8,7 @@ using MediatR;
 
 namespace Generator.Application.Handlers
 {
-    public class PayloadHandler : IRequestHandler<PayloadDto, RequestResult>
+    public class PayloadHandler : IRequestHandler<ChoiceDto, RequestResult>
     {
         private readonly IMapper mapper;
 
@@ -17,12 +17,17 @@ namespace Generator.Application.Handlers
             this.mapper = mapper;
         }
 
-        public async Task<RequestResult> Handle(PayloadDto payloadDto, CancellationToken token)
+        public Task<RequestResult> Handle(ChoiceDto choiceDto, CancellationToken token)
         {
-            var payload = mapper.Map<Payload>(payloadDto);
+            if (choiceDto.PictureA != choiceDto.UserChoice && choiceDto.PictureB != choiceDto.UserChoice)
+            {
+                return Task.FromResult(new RequestResult("User's choice differs from presented options", false));
+            }
+
+            var choice = mapper.Map<Choice>(choiceDto);
 
             // TODO: authorization and db that uses payload
-            return new RequestResult();
+            return Task.FromResult(new RequestResult());
         }
     }
 }

@@ -9,12 +9,12 @@ using MediatR;
 namespace Generator.Application.Validations
 {
     public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-            where TRequest : PayloadDto
+            where TRequest : ChoiceDto
             where TResponse : RequestResult
     {
         private readonly IValidator validator;
 
-        public ValidationBehaviour(IValidator<PayloadDto> validator)
+        public ValidationBehaviour(IValidator<ChoiceDto> validator)
         {
             this.validator = validator;
         }
@@ -25,7 +25,7 @@ namespace Generator.Application.Validations
 
             if (!result.IsValid)
             {
-                RequestResult response = new RequestResult(false, result.Errors.Select(p => p.ToString()).ToList());
+                RequestResult response = new RequestResult(result.Errors.Select(p => p.ToString()).ToList(), false);
                 return Task.FromResult(response as TResponse);
             }
 

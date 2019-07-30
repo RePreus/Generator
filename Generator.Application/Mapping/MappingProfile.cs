@@ -8,7 +8,7 @@ namespace Generator.Application.Mapping
     {
         public MappingProfile()
         {
-            CreateMap<PayloadDto, Payload>();
+            CreateMap<ChoiceDto, Choice>();
         }
     }
 }

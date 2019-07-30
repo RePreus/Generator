@@ -29,7 +29,7 @@ namespace Generator.API
         {
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddTransient<IValidator<PayloadDto>, PayloadValidator>();
+            services.AddTransient<IValidator<ChoiceDto>, PayloadValidator>();
 
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddMediatR(typeof(PayloadHandler));
