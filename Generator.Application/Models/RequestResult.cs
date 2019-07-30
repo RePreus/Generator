@@ -16,6 +16,7 @@ namespace Generator.Application.Models
         public RequestResult(string message, bool success = true)
         {
             this.Success = success;
+            this.Message = new List<string>();
             this.Message.Add(message);
         }
 
