@@ -1,4 +1,4 @@
-using FluentValidation;
+﻿using FluentValidation;
 using Generator.Application.DTOs;
 
 namespace Generator.Application.Validations
