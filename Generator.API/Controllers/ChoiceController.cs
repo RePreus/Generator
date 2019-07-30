@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Generator.Application.DTOs;
 using Generator.Application.Models;
 using MediatR;
@@ -29,12 +29,6 @@ namespace Generator.API.Controllers
            {
                return StatusCode(400, requestResult.Message);
            }
-        }
-
-        [HttpGet]
-        public IActionResult Get()
-        {
-            return StatusCode(403);
         }
     }
 }
