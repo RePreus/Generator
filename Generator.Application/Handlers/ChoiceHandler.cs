@@ -19,7 +19,7 @@ namespace Generator.Application.Handlers
 
         public Task<RequestResult> Handle(ChoiceDto choiceDto, CancellationToken token)
         {
-            if (choiceDto.PictureA != choiceDto.UserChoice && choiceDto.PictureB != choiceDto.UserChoice)
+            if (choiceDto.UserChoice != choiceDto.PictureA && choiceDto.UserChoice != choiceDto.PictureB)
             {
                 return Task.FromResult(new RequestResult("User's choice differs from presented options", false));
             }
