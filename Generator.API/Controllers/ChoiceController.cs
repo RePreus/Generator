@@ -9,11 +9,11 @@ namespace Generator.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class ChoiceController : ControllerBase
     {
         private readonly IMediator mediator;
 
-        public ValuesController(IMediator mediator)
+        public ChoiceController(IMediator mediator)
         {
             this.mediator = mediator;
         }
