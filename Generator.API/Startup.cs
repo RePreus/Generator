@@ -1,4 +1,4 @@
-using AutoMapper;
+﻿using AutoMapper;
 using FluentValidation;
 using Generator.Application.DTOs;
 using Generator.Application.Handlers;
@@ -28,10 +28,10 @@ namespace Generator.API
         {
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddTransient<IValidator<ChoiceDto>, PayloadValidator>();
+            services.AddTransient<IValidator<ChoiceDto>, ChoiceDtoValidator>();
 
             services.AddAutoMapper(typeof(MappingProfile));
-            services.AddMediatR(typeof(PayloadHandler));
+            services.AddMediatR(typeof(ChoiceHandler));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie();

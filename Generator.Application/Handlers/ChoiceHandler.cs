@@ -8,11 +8,11 @@ using MediatR;
 
 namespace Generator.Application.Handlers
 {
-    public class PayloadHandler : IRequestHandler<ChoiceDto, RequestResult>
+    public class ChoiceHandler : IRequestHandler<ChoiceDto, RequestResult>
     {
         private readonly IMapper mapper;
 
-        public PayloadHandler(IMapper mapper)
+        public ChoiceHandler(IMapper mapper)
         {
             this.mapper = mapper;
         }
