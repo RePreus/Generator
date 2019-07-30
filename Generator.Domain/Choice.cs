@@ -10,10 +10,10 @@ namespace Generator.Domain
             PictureB = pictureB;
             UserChoice = userChoice;
         }
-        public Guid PictureA { get; private set; }
+        public Guid PictureA { get; }
 
-        public Guid PictureB { get; private set; }
+        public Guid PictureB { get; }
 
-        public Guid UserChoice { get; private set; }
+        public Guid UserChoice { get; }
     }
 }

@@ -16,8 +16,8 @@ namespace Generator.Application.Models
             Message = new List<string> { message };
         }
 
-        public bool Success { get; private set; }
+        public bool Success { get; }
 
-        public List<string> Message { get; private set; }
+        public List<string> Message { get; }
     }
 }
