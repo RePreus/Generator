@@ -1,6 +1,5 @@
-﻿using AutoMapper;
+using AutoMapper;
 using FluentValidation;
-using FluentValidation.AspNetCore;
 using Generator.Application.DTOs;
 using Generator.Application.Handlers;
 using Generator.Application.Mapping;
