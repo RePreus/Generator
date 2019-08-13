@@ -1,14 +1,17 @@
-﻿using AutoMapper;
+using AutoMapper;
 using FluentValidation;
 using Generator.Application.DTOs;
 using Generator.Application.Handlers;
 using Generator.Application.Mapping;
+using Generator.Application.Models;
+using Generator.Application.Persistence;
 using Generator.Application.Validations;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -29,7 +32,11 @@ namespace Generator.API
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddTransient<IValidator<ChoiceDto>, ChoiceDtoValidator>();
+            services.AddTransient<IValidator<TableName>, TableNameValidator>();
 
+            services.AddDbContext<GeneratorContext>(
+                options => options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddMediatR(typeof(ChoiceHandler));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
