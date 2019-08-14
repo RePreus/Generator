@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Generator.Domain
+﻿namespace Generator.Domain
 {
     public class Choice
     {
