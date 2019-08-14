@@ -4,16 +4,10 @@ namespace Generator.Domain
 {
     public class Choice
     {
-        public Choice(Guid pictureA, Guid pictureB, Guid userChoice)
-        {
-            PictureA = pictureA;
-            PictureB = pictureB;
-            UserChoice = userChoice;
-        }
-        public Guid PictureA { get; }
+        public int PictureAId { get; }
 
-        public Guid PictureB { get; }
+        public int PicutreBId { get; }
 
-        public Guid UserChoice { get; }
+        public int UserChoiceId { get; }
     }
 }

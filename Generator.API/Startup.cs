@@ -1,5 +1,6 @@
-using AutoMapper;
+﻿using AutoMapper;
 using FluentValidation;
+using Generator.API.Middleware;
 using Generator.Application.DTOs;
 using Generator.Application.Handlers;
 using Generator.Application.Mapping;
@@ -7,7 +8,6 @@ using Generator.Application.Models;
 using Generator.Application.Persistence;
 using Generator.Application.Validations;
 using MediatR;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -48,9 +48,11 @@ namespace Generator.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseGeneratorExceptionMiddleware();
             }
             else
             {
+                app.UseGeneratorExceptionMiddleware();
                 app.UseHsts(); // important
             }
 

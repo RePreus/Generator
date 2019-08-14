@@ -1,5 +1,4 @@
-﻿using System;
-using Generator.Application.Models;
+﻿using Generator.Application.Models;
 using MediatR;
 
 namespace Generator.Application.DTOs
@@ -7,12 +6,12 @@ namespace Generator.Application.DTOs
     /// <summary>
     /// DTO of Choice object.
     /// </summary>
-    public class ChoiceDto : IRequest<RequestResult>
+    public class ChoiceDto : IRequest
     {
-        public Guid PictureA { get; set; }
+        public int PictureAId { get; set; }
 
-        public Guid PictureB { get; set; }
+        public int PictureBId { get; set; }
 
-        public Guid UserChoice { get; set; }
+        public int UserChoiceId { get; set; }
     }
 }
