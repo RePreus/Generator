@@ -23,7 +23,7 @@ namespace Generator.Application.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<byte[]>("Image");
+                    b.Property<string>("Image");
 
                     b.HasKey("Id");
 
