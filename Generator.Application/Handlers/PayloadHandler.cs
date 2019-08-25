@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Generator.Application.Extensions;
 using Generator.Application.Models;
 using Generator.Application.Persistence;
 using MediatR;
