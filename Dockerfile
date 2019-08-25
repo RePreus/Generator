@@ -5,7 +5,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:2.1-stretch AS build
 WORKDIR /src
-COPY ../Generator.API/Generator.API.csproj Generator.API/
+COPY ./Generator.API/Generator.API.csproj Generator.API/
 COPY ["Generator.Infrastructure/Generator.Infrastructure.csproj", "Generator.Infrastructure/"]
 COPY ["Generator.Application/Generator.Application.csproj", "Generator.Application/"]
 COPY ["Generator.Domain/Generator.Domain.csproj", "Generator.Domain/"]
