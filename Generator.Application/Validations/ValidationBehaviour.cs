@@ -3,9 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
-using Generator.Application.DTOs;
 using Generator.Application.Exceptions;
-using Generator.Application.Models;
 using MediatR;
 
 namespace Generator.Application.Validations
