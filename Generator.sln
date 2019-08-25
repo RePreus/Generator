@@ -16,7 +16,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.API", "Generator.
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{47A7AF81-8E2B-4DC8-B96E-F15783970B0E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Infrastructure", "Generator.Infrastructure\Generator.Infrastructure.csproj", "{9713A4E7-9414-45CD-972B-6C47B0BA9163}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.Infrastructure", "Generator.Infrastructure\Generator.Infrastructure.csproj", "{9713A4E7-9414-45CD-972B-6C47B0BA9163}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
