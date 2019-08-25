@@ -3,10 +3,12 @@ using FluentValidation;
 using Generator.API.Middleware;
 using Generator.Application.DTOs;
 using Generator.Application.Handlers;
+using Generator.Application.Interfaces;
 using Generator.Application.Mapping;
 using Generator.Application.Models;
 using Generator.Application.Persistence;
 using Generator.Application.Validations;
+using Generator.Infrastructure.IO;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,7 +34,8 @@ namespace Generator.API
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddTransient<IValidator<ChoiceDto>, ChoiceDtoValidator>();
-            services.AddTransient<IValidator<TableName>, TableNameValidator>();
+            services.AddTransient<IValidator<ReceivedName>, TableNameValidator>();
+            services.AddSingleton<IFileWriter, FileWriter>();
 
             services.AddDbContext<GeneratorContext>(
                 options => options.UseSqlServer(

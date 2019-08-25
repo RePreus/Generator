@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Generator.Application.DTOs;
 using Generator.Application.Exceptions;
-using Generator.Application.Extensions;
+using Generator.Application.Interfaces;
 using Generator.Application.Persistence;
 using Generator.Domain;
 using MediatR;
@@ -14,11 +14,13 @@ namespace Generator.Application.Handlers
     {
         private readonly IMapper mapper;
         private readonly GeneratorContext context;
+        private readonly IFileWriter writer;
 
-        public ChoiceHandler(IMapper mapper, GeneratorContext context)
+        public ChoiceHandler(IMapper mapper, GeneratorContext context, IFileWriter writer)
         {
             this.mapper = mapper;
             this.context = context;
+            this.writer = writer;
         }
 
         protected override Task Handle(ChoiceDto choiceDto, CancellationToken token)
@@ -34,12 +36,11 @@ namespace Generator.Application.Handlers
             }
 
             var choice = mapper.Map<Choice>(choiceDto);
-            choice.SaveToFile();
-            context.Pictures.Find(choice.PictureAId).Image.SaveToFile();
-            string tmp = ",";
-            tmp.SaveToFile();
-            context.Pictures.Find(choice.PictureBId).Image.SaveToFile();
-            System.Environment.NewLine.SaveToFile();
+            writer.SaveToFile(choice);
+            writer.SaveToFile(context.Pictures.Find(choice.PictureAId).Image);
+            writer.SaveToFile(",");
+            writer.SaveToFile(context.Pictures.Find(choice.PictureBId).Image);
+            writer.SaveToFile(System.Environment.NewLine);
 
             // TODO: authorization and db that uses payload
             return Task.CompletedTask;
