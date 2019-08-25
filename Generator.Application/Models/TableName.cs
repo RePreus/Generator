@@ -2,7 +2,7 @@
 
 namespace Generator.Application.Models
 {
-    public class TableName : IRequest<Payload>
+    public class ReceivedName : IRequest<Payload>
     {
         public string Name { get; set; }
     }

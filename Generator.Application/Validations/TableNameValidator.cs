@@ -3,7 +3,7 @@ using Generator.Application.Models;
 
 namespace Generator.Application.Validations
 {
-    public class TableNameValidator : AbstractValidator<TableName>
+    public class TableNameValidator : AbstractValidator<ReceivedName>
     {
         public TableNameValidator()
         {

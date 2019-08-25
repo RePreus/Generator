@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,7 +9,7 @@ using MediatR;
 
 namespace Generator.Application.Handlers
 {
-    public class PayloadHandler : IRequestHandler<TableName, Payload>
+    public class PayloadHandler : IRequestHandler<ReceivedName, Payload>
     {
         private readonly GeneratorContext context;
 
@@ -18,7 +18,7 @@ namespace Generator.Application.Handlers
             this.context = context;
         }
 
-        public Task<Payload> Handle(TableName tableName, CancellationToken token)
+        public Task<Payload> Handle(ReceivedName tableName, CancellationToken token)
         {
             var count = context.Pictures.Count();
             Tuple<int, int> ids = count.GetRandomIds();
