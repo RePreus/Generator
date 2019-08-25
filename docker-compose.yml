@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  generator.api:
+    image: ${DOCKER_REGISTRY-}generatorapi
+    build:
+      context: .
+      dockerfile: Generator.API/Dockerfile
