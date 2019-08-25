@@ -21,11 +21,11 @@ namespace Generator.API.Controllers
         public async Task<IActionResult> Post([FromBody] ChoiceDto request)
         {
             await mediator.Send(request);
-            return StatusCode(200);
+            return Ok();
         }
 
         [HttpGet]
-        public async Task<ActionResult<Payload>> Get([FromBody] TableName tableName)
+        public async Task<ActionResult<Payload>> Get([FromBody] ReceivedName tableName)
             => await mediator.Send(tableName);
     }
 }
