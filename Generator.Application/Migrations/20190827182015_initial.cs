@@ -13,7 +13,7 @@ namespace Generator.Application.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Image = table.Column<string>(nullable: false),
+                    Image = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {

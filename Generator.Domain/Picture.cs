@@ -7,7 +7,7 @@
             Id = id;
             Image = image;
         }
-        public int Id { get; }
-        public string Image { get; }
+        public int Id { get; private set; }
+        public string Image { get; private set; }
     }
 }
