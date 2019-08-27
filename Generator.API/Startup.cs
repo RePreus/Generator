@@ -35,7 +35,7 @@ namespace Generator.API
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddTransient<IValidator<ChoiceDto>, ChoiceDtoValidator>();
             services.AddTransient<IValidator<ReceivedName>, TableNameValidator>();
-            services.AddSingleton<IFileWriter, FileWriter>();
+            services.AddSingleton<IWriter, FileWriter>();
 
             services.AddDbContext<GeneratorContext>(
                 options => options.UseSqlServer(

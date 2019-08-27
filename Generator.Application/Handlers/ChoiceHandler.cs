@@ -14,9 +14,9 @@ namespace Generator.Application.Handlers
     {
         private readonly IMapper mapper;
         private readonly GeneratorContext context;
-        private readonly IFileWriter writer;
+        private readonly IWriter writer;
 
-        public ChoiceHandler(IMapper mapper, GeneratorContext context, IFileWriter writer)
+        public ChoiceHandler(IMapper mapper, GeneratorContext context, IWriter writer)
         {
             this.mapper = mapper;
             this.context = context;
@@ -36,11 +36,8 @@ namespace Generator.Application.Handlers
             }
 
             var choice = mapper.Map<Choice>(choiceDto);
-            writer.SaveToFile(choice);
-            writer.SaveToFile(context.Pictures.Find(choice.PictureAId).Image);
-            writer.SaveToFile(",");
-            writer.SaveToFile(context.Pictures.Find(choice.PictureBId).Image);
-            writer.SaveToFile(System.Environment.NewLine);
+            string[] pictures = { context.Pictures.Find(choice.PictureAId).Image, context.Pictures.Find(choice.PictureBId).Image };
+            writer.Save(pictures, choice);
 
             // TODO: authorization and db that uses payload
             return Task.CompletedTask;
