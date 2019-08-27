@@ -17,14 +17,14 @@ namespace Generator.API.Controllers
             this.mediator = mediator;
         }
 
-        [HttpPost]
+        [HttpPost("response")]
         public async Task<IActionResult> Post([FromBody] ChoiceDto request)
         {
             await mediator.Send(request);
             return Ok();
         }
 
-        [HttpGet]
+        [HttpGet("request")]
         public async Task<ActionResult<Payload>> Get([FromBody] ReceivedName tableName)
             => await mediator.Send(tableName);
     }
