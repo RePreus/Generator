@@ -7,9 +7,9 @@ namespace Generator.Application.Validations
     {
         public ChoiceDtoValidator()
         {
-            RuleFor(p => p.PictureAId).NotEmpty();
-            RuleFor(p => p.PictureBId).NotEmpty();
-            RuleFor(p => p.UserChoiceId).NotEmpty();
+            RuleFor(p => p.PictureAId).NotEmpty().GreaterThan(0);
+            RuleFor(p => p.PictureBId).NotEmpty().GreaterThan(0);
+            RuleFor(p => p.UserChoiceId).NotEmpty().GreaterThan(0);
         }
     }
 }
