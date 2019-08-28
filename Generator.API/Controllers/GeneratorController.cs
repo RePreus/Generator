@@ -25,7 +25,7 @@ namespace Generator.API.Controllers
         }
 
         [HttpGet("request")]
-        public async Task<ActionResult<Payload>> Get([FromBody] ReceivedName tableName)
-            => await mediator.Send(tableName);
+        public async Task<ActionResult<Payload>> Get([FromBody] ReceivedName receivedName)
+            => await mediator.Send(receivedName);
     }
 }
