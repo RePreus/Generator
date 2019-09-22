@@ -1,4 +1,4 @@
-﻿using Generator.Domain;
+﻿using Generator.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Generator.Application.Persistence

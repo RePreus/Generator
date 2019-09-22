@@ -1,29 +1,30 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Generator.Application.DTOs;
 using Generator.Application.Exceptions;
 using Generator.Application.Interfaces;
 using Generator.Application.Persistence;
-using Generator.Domain;
+using Generator.Domain.Entities;
 using MediatR;
 
 namespace Generator.Application.Handlers
 {
-    public class ChoiceHandler : AsyncRequestHandler<ChoiceDto>
+    public class ChoiceCommandHandler : AsyncRequestHandler<ChoiceCommand>
     {
         private readonly IMapper mapper;
         private readonly GeneratorContext context;
-        private readonly IWriter writer;
+        private readonly IWriter<Choice> writer;
 
-        public ChoiceHandler(IMapper mapper, GeneratorContext context, IWriter writer)
+        public ChoiceCommandHandler(IMapper mapper, GeneratorContext context, IWriter<Choice> writer)
         {
             this.mapper = mapper;
             this.context = context;
             this.writer = writer;
         }
 
-        protected override Task Handle(ChoiceDto choiceDto, CancellationToken token)
+        protected override async Task Handle(ChoiceCommand choiceDto, CancellationToken token)
         {
             if (choiceDto.UserChoiceId != choiceDto.PictureAId && choiceDto.UserChoiceId != choiceDto.PictureBId)
             {
@@ -36,11 +37,11 @@ namespace Generator.Application.Handlers
             }
 
             var choice = mapper.Map<Choice>(choiceDto);
-            string[] pictures = { context.Pictures.Find(choice.PictureAId).Image, context.Pictures.Find(choice.PictureBId).Image };
-            writer.Save(pictures, choice);
+            choice.PictureA = context.Pictures.Find(choice.PictureAId).Image;
+            choice.PictureB = context.Pictures.Find(choice.PictureBId).Image;
+            await writer.Save(choice);
 
             // TODO: authorization and db that uses payload
-            return Task.CompletedTask;
         }
     }
 }

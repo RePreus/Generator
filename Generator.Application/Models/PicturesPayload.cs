@@ -1,16 +1,17 @@
-﻿using Generator.Domain;
+﻿using System;
+using Generator.Domain.Entities;
 
 namespace Generator.Application.Models
 {
-    public class Payload
+    public class PicturesPayload
     {
-        public Payload(Picture pictureA, Picture pictureB)
+        public PicturesPayload(Picture pictureA, Picture pictureB)
         {
             this.PictureA = pictureA;
             this.PictureB = pictureB;
         }
 
-        public Payload(int pictureAId, string pictureA, int pictureBId, string pictureB)
+        public PicturesPayload(Guid pictureAId, string pictureA, Guid pictureBId, string pictureB)
             : this(new Picture(pictureAId, pictureA), new Picture(pictureBId, pictureB))
         {
         }

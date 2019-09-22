@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Generator.Application.DTOs;
 using Generator.Application.Models;
+using Generator.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,14 +19,14 @@ namespace Generator.API.Controllers
         }
 
         [HttpPost("response")]
-        public async Task<IActionResult> Post([FromBody] ChoiceDto request)
+        public async Task<IActionResult> Post([FromBody] ChoiceCommand request)
         {
             await mediator.Send(request);
             return Ok();
         }
 
         [HttpGet("request")]
-        public async Task<ActionResult<Payload>> Get([FromBody] ReceivedName receivedName)
+        public async Task<ActionResult<PicturesPayload>> Get([FromBody] ReceivedNameQuery receivedName)
             => await mediator.Send(receivedName);
     }
 }

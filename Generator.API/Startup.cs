@@ -7,7 +7,10 @@ using Generator.Application.Interfaces;
 using Generator.Application.Mapping;
 using Generator.Application.Models;
 using Generator.Application.Persistence;
+using Generator.Application.Queries;
 using Generator.Application.Validations;
+using Generator.Domain.Entities;
+using Generator.Infrastructure.Configuration;
 using Generator.Infrastructure.IO;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -33,15 +36,18 @@ namespace Generator.API
         {
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddTransient<IValidator<ChoiceDto>, ChoiceDtoValidator>();
-            services.AddTransient<IValidator<ReceivedName>, TableNameValidator>();
-            services.AddSingleton<IWriter, FileWriter>();
+            services.AddOptions();
+            services.Configure<ChoiceWriterConfiguration>(Configuration.GetSection("FileWriterConfiguration"));
+
+            services.AddScoped<IValidator<ChoiceCommand>, ChoiceCommandValidator>();
+            services.AddScoped<IValidator<ReceivedNameQuery>, ReceivedNameValidator>();
+            services.AddScoped<IWriter<Choice>, ChoiceWriter>();
 
             services.AddDbContext<GeneratorContext>(
                 options => options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddAutoMapper(typeof(MappingProfile));
-            services.AddMediatR(typeof(ChoiceHandler));
+            services.AddMediatR(typeof(ChoiceCommandHandler));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
         }
 
