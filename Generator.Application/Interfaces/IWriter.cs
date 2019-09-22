@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Generator.Application.Interfaces
 {
-    public interface IWriter
+    public interface IWriter<T>
     {
-        void Save(string[] pictures, Domain.Choice choice);
+        Task Save(T input);
     }
 }
