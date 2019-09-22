@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Generator.Application.Migrations
@@ -11,8 +11,7 @@ namespace Generator.Application.Migrations
                 name: "Pictures",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<Guid>(nullable: false),
                     Image = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
