@@ -9,11 +9,11 @@ using MediatR;
 
 namespace Generator.Application.Handlers
 {
-    public class ReceivedNameCommandHandler : IRequestHandler<ReceivedNameQuery, PicturesPayload>
+    public class ReceivedNameQueryHandler : IRequestHandler<ReceivedNameQuery, PicturesPayload>
     {
         private readonly GeneratorContext context;
 
-        public ReceivedNameCommandHandler(GeneratorContext context)
+        public ReceivedNameQueryHandler(GeneratorContext context)
         {
             this.context = context;
         }
