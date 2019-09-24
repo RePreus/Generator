@@ -7,7 +7,7 @@ using Microsoft.Extensions.Options;
 
 namespace Generator.Infrastructure.IO
 {
-    public class ChoiceWriter : IWriter<Choice>
+    public class ChoiceWriter : IWriter<UserChoice>
     {
         private readonly StreamWriter outputFile;
 
@@ -16,7 +16,7 @@ namespace Generator.Infrastructure.IO
             outputFile = File.AppendText(config.Value.filename ?? "DefaultFilename.csv");
         }
 
-        public async Task Save(Choice input)
+        public async Task Save(UserChoice input)
         {
             var properties = input.GetType().GetProperties();
             for (int i = 0; i < properties.Length - 1; i++)

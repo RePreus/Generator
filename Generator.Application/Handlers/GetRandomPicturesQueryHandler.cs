@@ -9,16 +9,16 @@ using MediatR;
 
 namespace Generator.Application.Handlers
 {
-    public class ReceivedNameQueryHandler : IRequestHandler<ReceivedNameQuery, PicturesPayload>
+    public class GetRandomPicturesQueryHandler : IRequestHandler<GetRandomPicturesQuery, PicturesPayload>
     {
         private readonly GeneratorContext context;
 
-        public ReceivedNameQueryHandler(GeneratorContext context)
+        public GetRandomPicturesQueryHandler(GeneratorContext context)
         {
             this.context = context;
         }
 
-        public Task<PicturesPayload> Handle(ReceivedNameQuery tableName, CancellationToken token)
+        public Task<PicturesPayload> Handle(GetRandomPicturesQuery tableName, CancellationToken token)
         {
             var pictures = context.Pictures.OrderBy(r => Guid.NewGuid()).Take(2).ToList();
             return Task.FromResult(new PicturesPayload(pictures[0].Id, pictures[0].Image, pictures[1].Id, pictures[1].Image));

@@ -3,7 +3,7 @@ using Generator.Application.Queries;
 
 namespace Generator.Application.Validations
 {
-    public class ReceivedNameValidator : AbstractValidator<ReceivedNameQuery>
+    public class ReceivedNameValidator : AbstractValidator<GetRandomPicturesQuery>
     {
         public ReceivedNameValidator()
         {

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using FluentValidation;
 using Generator.API.Middleware;
-using Generator.Application.DTOs;
+using Generator.Application.Commands;
 using Generator.Application.Handlers;
 using Generator.Application.Interfaces;
 using Generator.Application.Mapping;
@@ -39,15 +39,15 @@ namespace Generator.API
             services.AddOptions();
             services.Configure<ChoiceWriterConfiguration>(Configuration.GetSection("FileWriterConfiguration"));
 
-            services.AddScoped<IValidator<ChoiceCommand>, ChoiceCommandValidator>();
-            services.AddScoped<IValidator<ReceivedNameQuery>, ReceivedNameValidator>();
-            services.AddScoped<IWriter<Choice>, ChoiceWriter>();
+            services.AddScoped<IValidator<SaveChosenPicturesCommand>, ChoiceCommandValidator>();
+            services.AddScoped<IValidator<GetRandomPicturesQuery>, ReceivedNameValidator>();
+            services.AddScoped<IWriter<UserChoice>, ChoiceWriter>();
 
             services.AddDbContext<GeneratorContext>(
                 options => options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddAutoMapper(typeof(MappingProfile));
-            services.AddMediatR(typeof(ChoiceCommandHandler));
+            services.AddMediatR(typeof(SaveChosenPicturesCommandHandler));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
         }
 

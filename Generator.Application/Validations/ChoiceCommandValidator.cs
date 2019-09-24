@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using Generator.Application.DTOs;
+using Generator.Application.Commands;
 
 namespace Generator.Application.Validations
 {
-    public class ChoiceCommandValidator : AbstractValidator<ChoiceCommand>
+    public class ChoiceCommandValidator : AbstractValidator<SaveChosenPicturesCommand>
     {
         public ChoiceCommandValidator()
         {
