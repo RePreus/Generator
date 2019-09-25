@@ -2,10 +2,10 @@
 using FluentValidation;
 using Generator.API.Middleware;
 using Generator.Application.Commands;
+using Generator.Application.Dtos;
 using Generator.Application.Handlers;
 using Generator.Application.Interfaces;
 using Generator.Application.Mapping;
-using Generator.Application.Models;
 using Generator.Application.Persistence;
 using Generator.Application.Queries;
 using Generator.Application.Validations;
@@ -37,11 +37,11 @@ namespace Generator.API
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddOptions();
-            services.Configure<ChoiceWriterConfiguration>(Configuration.GetSection("FileWriterConfiguration"));
+            services.Configure<PicturesMessageBusDtoWriterConfiguration>(Configuration.GetSection("FileWriterConfiguration"));
 
             services.AddScoped<IValidator<SaveChosenPicturesCommand>, ChoiceCommandValidator>();
             services.AddScoped<IValidator<GetRandomPicturesQuery>, ReceivedNameValidator>();
-            services.AddScoped<IWriter<UserChoice>, ChoiceWriter>();
+            services.AddScoped<IWriter<PicturesMessageBusDto>, PicturesMessageBusDtoWriter>();
 
             services.AddDbContext<GeneratorContext>(
                 options => options.UseSqlServer(

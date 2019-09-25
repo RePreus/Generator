@@ -1,9 +1,9 @@
-﻿using Generator.Application.Models;
+﻿using Generator.Application.Dtos;
 using MediatR;
 
 namespace Generator.Application.Queries
 {
-    public class GetRandomPicturesQuery : IRequest<PicturesPayload>
+    public class GetRandomPicturesQuery : IRequest<RandomPicturesResponseDto>
     {
         public string Name { get; set; }
     }

@@ -12,7 +12,7 @@ namespace Generator.Application.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Image = table.Column<string>(nullable: false)
+                    Image = table.Column<string>(nullable: false),
                 },
                 constraints: table =>
                 {

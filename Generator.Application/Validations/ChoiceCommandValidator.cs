@@ -7,9 +7,8 @@ namespace Generator.Application.Validations
     {
         public ChoiceCommandValidator()
         {
-            RuleFor(p => p.PictureAId).NotEmpty();
-            RuleFor(p => p.PictureBId).NotEmpty();
-            RuleFor(p => p.UserChoiceId).NotEmpty();
+            RuleFor(p => p.ChosenPictureId).NotEmpty();
+            RuleFor(p => p.OtherPictureId).NotEmpty();
         }
     }
 }

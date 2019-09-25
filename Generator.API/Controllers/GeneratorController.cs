@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Generator.Application.Commands;
-using Generator.Application.Models;
+using Generator.Application.Dtos;
 using Generator.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -18,15 +18,15 @@ namespace Generator.API.Controllers
             this.mediator = mediator;
         }
 
-        [HttpPost("response")]
+        [HttpPost("pictures")]
         public async Task<IActionResult> Post([FromBody] SaveChosenPicturesCommand request)
         {
             await mediator.Send(request);
             return Ok();
         }
 
-        [HttpGet("request")]
-        public async Task<ActionResult<PicturesPayload>> Get([FromBody] GetRandomPicturesQuery receivedName)
+        [HttpGet("pictures")]
+        public async Task<ActionResult<RandomPicturesResponseDto>> Get([FromBody] GetRandomPicturesQuery receivedName)
             => await mediator.Send(receivedName);
     }
 }

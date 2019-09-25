@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using Generator.Application.Commands;
+using Generator.Application.Dtos;
 using Generator.Application.Exceptions;
 using Generator.Application.Interfaces;
 using Generator.Application.Persistence;
@@ -31,8 +32,9 @@ namespace Generator.Application.Handlers
             }
 
             var choice = mapper.Map<UserChoice>(request);
-            choice.PictureA = context.Pictures.Find(choice.ChosenPictureId).Image;
-            choice.PictureB = context.Pictures.Find(choice.OtherPictureId).Image;
+            PicturesMessageBusDto payload = new PicturesMessageBusDto(
+                context.Pictures.Find(choice.ChosenPictureId).Image,
+                context.Pictures.Find(choice.OtherPictureId).Image);
             await writer.Save(choice);
         }
     }
