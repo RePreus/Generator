@@ -21,7 +21,7 @@ namespace Generator.Application.Handlers
             this.mapper = mapper;
         }
 
-        public Task<RandomPicturesResponseDto> Handle(GetRandomPicturesQuery tableName, CancellationToken token)
+        public Task<RandomPicturesResponseDto> Handle(GetRandomPicturesQuery query, CancellationToken token)
         {
             var pictures = context.Pictures.OrderBy(r => Guid.NewGuid()).Take(2).ToList();
             var pictureDtoA = mapper.Map<PictureDto>(pictures[0]);
