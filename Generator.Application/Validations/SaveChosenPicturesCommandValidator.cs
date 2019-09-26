@@ -3,9 +3,9 @@ using Generator.Application.Commands;
 
 namespace Generator.Application.Validations
 {
-    public class ChoiceCommandValidator : AbstractValidator<SaveChosenPicturesCommand>
+    public class SaveChosenPicturesCommandValidator : AbstractValidator<SaveChosenPicturesCommand>
     {
-        public ChoiceCommandValidator()
+        public SaveChosenPicturesCommandValidator()
         {
             RuleFor(p => p.ChosenPictureId).NotEmpty();
             RuleFor(p => p.OtherPictureId).NotEmpty();

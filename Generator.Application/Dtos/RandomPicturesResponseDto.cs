@@ -1,23 +1,15 @@
-﻿using System;
-using Generator.Domain.Entities;
-
-namespace Generator.Application.Dtos
+﻿namespace Generator.Application.Dtos
 {
     public class RandomPicturesResponseDto
     {
-        public RandomPicturesResponseDto(Picture pictureA, Picture pictureB)
+        public RandomPicturesResponseDto(PictureDto pictureDtoA, PictureDto pictureDtoB)
         {
-            this.PictureA = pictureA;
-            this.PictureB = pictureB;
+            PictureDtoA = pictureDtoA;
+            PictureDtoB = pictureDtoB;
         }
 
-        public RandomPicturesResponseDto(Guid pictureAId, string pictureA, Guid pictureBId, string pictureB)
-            : this(new Picture(pictureAId, pictureA), new Picture(pictureBId, pictureB))
-        {
-        }
+        public PictureDto PictureDtoA { get; }
 
-        public Picture PictureA { get; }
-
-        public Picture PictureB { get; }
+        public PictureDto PictureDtoB { get; }
     }
 }

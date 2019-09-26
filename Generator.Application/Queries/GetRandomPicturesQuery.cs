@@ -5,6 +5,6 @@ namespace Generator.Application.Queries
 {
     public class GetRandomPicturesQuery : IRequest<RandomPicturesResponseDto>
     {
-        public string Name { get; set; }
+        public string GroupName { get; set; }
     }
 }

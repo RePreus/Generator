@@ -9,7 +9,6 @@ using Generator.Application.Mapping;
 using Generator.Application.Persistence;
 using Generator.Application.Queries;
 using Generator.Application.Validations;
-using Generator.Domain.Entities;
 using Generator.Infrastructure.Configuration;
 using Generator.Infrastructure.IO;
 using MediatR;
@@ -39,8 +38,8 @@ namespace Generator.API
             services.AddOptions();
             services.Configure<PicturesMessageBusDtoWriterConfiguration>(Configuration.GetSection("FileWriterConfiguration"));
 
-            services.AddScoped<IValidator<SaveChosenPicturesCommand>, ChoiceCommandValidator>();
-            services.AddScoped<IValidator<GetRandomPicturesQuery>, ReceivedNameValidator>();
+            services.AddScoped<IValidator<SaveChosenPicturesCommand>, SaveChosenPicturesCommandValidator>();
+            services.AddScoped<IValidator<GetRandomPicturesQuery>, GetRandomPicturesQueryValidator>();
             services.AddScoped<IWriter<PicturesMessageBusDto>, PicturesMessageBusDtoWriter>();
 
             services.AddDbContext<GeneratorContext>(

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Generator.Application.Commands;
+using Generator.Application.Dtos;
 using Generator.Domain.Entities;
 
 namespace Generator.Application.Mapping
@@ -9,6 +10,7 @@ namespace Generator.Application.Mapping
         public MappingProfile()
         {
             CreateMap<SaveChosenPicturesCommand, UserChoice>();
+            CreateMap<Picture, PictureDto>();
         }
     }
 }
