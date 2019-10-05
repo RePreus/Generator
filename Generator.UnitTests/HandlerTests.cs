@@ -19,12 +19,10 @@ namespace Generator.UnitTests
     public class HandlerTests
     {
         private readonly GeneratorContext context;
-        private readonly ITestOutputHelper output;
         private readonly Guid IdA;
         private readonly Guid IdB;
-        public HandlerTests(ITestOutputHelper output)
+        public HandlerTests()
         {
-            this.output = output;
             IdA = Guid.NewGuid();
             IdB = Guid.NewGuid();
             context = new GeneratorContext(new DbContextOptionsBuilder<GeneratorContext>()
@@ -37,12 +35,17 @@ namespace Generator.UnitTests
         [Fact]
         public async void GetRandomPicturesQueryHandlerTest()
         {
+            //Arrange
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Picture, PictureDto>()).CreateMapper();
-            var query = new GetRandomPicturesQuery() {GroupName = "test"};
+            var query = new GetRandomPicturesQuery {GroupName = "test"};
             var handler = new GetRandomPicturesQueryHandler(context, mapper);
+
+            //Act
             var result = await handler.Handle(query, CancellationToken.None);
             var image2 = result.PictureDtoB.Image;
             var image1 = result.PictureDtoA.Image;
+
+            //Assert
             Assert.True(image1 == "image1" || image1 == "image2");
             Assert.True(image2 == "image1" || image2 == "image2");
         }
@@ -50,13 +53,18 @@ namespace Generator.UnitTests
         [Fact]
         public async void SaveChosenPicturesCommandHandlerTest()
         {
+            //Arrange
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<SaveChosenPicturesCommand, UserChoice>()).CreateMapper();
-            Mock<IWriter<PicturesMessageBusDto>> mock = new Mock<IWriter<PicturesMessageBusDto>>();
-            mock.Setup(m => m.Save(It.IsAny<PicturesMessageBusDto>()))
-                .Callback(( PicturesMessageBusDto a) => output.WriteLine(a.ChosenPicture + "," + a.OtherPicture));
-            var command = new SaveChosenPicturesCommand() {ChosenPictureId = IdA, OtherPictureId = IdB};
+            var mock = new Mock<IWriter<PicturesMessageBusDto>>();
+            mock.Setup(m => m.Save(It.IsAny<PicturesMessageBusDto>()));
+            var command = new SaveChosenPicturesCommand {ChosenPictureId = IdA, OtherPictureId = IdB};
             IRequestHandler<SaveChosenPicturesCommand> handler = new SaveChosenPicturesCommandHandler(mapper, context, mock.Object);
-            var result = await handler.Handle(command, CancellationToken.None);
+
+            //Act
+            await handler.Handle(command, CancellationToken.None);
+
+            //Assert
+            mock.Verify(m => m.Save(It.IsAny<PicturesMessageBusDto>()), Times.AtLeastOnce);
         }
     }
 }
