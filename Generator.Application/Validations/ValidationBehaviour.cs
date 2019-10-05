@@ -1,32 +1,35 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
-using Generator.Application.DTOs;
-using Generator.Application.Models;
+using Generator.Application.Exceptions;
 using MediatR;
 
 namespace Generator.Application.Validations
 {
     public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-            where TRequest : ChoiceDto
-            where TResponse : RequestResult
+        where TRequest : IRequest<TResponse>
     {
-        private readonly IValidator validator;
+        private readonly IEnumerable<IValidator<TRequest>> validators;
 
-        public ValidationBehaviour(IValidator<ChoiceDto> validator)
+        public ValidationBehaviour(IEnumerable<IValidator<TRequest>> validators)
         {
-            this.validator = validator;
+            this.validators = validators;
         }
 
         public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
-            var result = validator.Validate(request);
+            var context = new ValidationContext(request);
+            var failures = validators
+                .Select(v => v.Validate(context))
+                .SelectMany(result => result.Errors)
+                .Where(f => f != default)
+                .ToList();
 
-            if (!result.IsValid)
+            if (failures.Count != 0)
             {
-                RequestResult response = new RequestResult(result.Errors.Select(p => p.ToString()).ToList(), false);
-                return Task.FromResult(response as TResponse);
+                throw new GeneratorException(new ValidationException(failures));
             }
 
             return next();

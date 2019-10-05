@@ -5,14 +5,17 @@ VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{161DF18E-B422-4F87-8F8B-ED38E34D5E62}"
 	ProjectSection(SolutionItems) = preProject
+		Dockerfile = Dockerfile
 		RuleSet.ruleset = RuleSet.ruleset
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Domain", "Generator.Domain\Generator.Domain.csproj", "{C77604A8-DAD1-438B-ABD8-30AFE7439E9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.Domain", "Generator.Domain\Generator.Domain.csproj", "{C77604A8-DAD1-438B-ABD8-30AFE7439E9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Application", "Generator.Application\Generator.Application.csproj", "{366C7D97-E26E-4407-A858-18CDBE6472E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.Application", "Generator.Application\Generator.Application.csproj", "{366C7D97-E26E-4407-A858-18CDBE6472E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.API", "Generator.API\Generator.API.csproj", "{371B8FB4-AB9A-4031-A43F-5A3FAB0FCC2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.API", "Generator.API\Generator.API.csproj", "{371B8FB4-AB9A-4031-A43F-5A3FAB0FCC2E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.Infrastructure", "Generator.Infrastructure\Generator.Infrastructure.csproj", "{9713A4E7-9414-45CD-972B-6C47B0BA9163}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +35,10 @@ Global
 		{371B8FB4-AB9A-4031-A43F-5A3FAB0FCC2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{371B8FB4-AB9A-4031-A43F-5A3FAB0FCC2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{371B8FB4-AB9A-4031-A43F-5A3FAB0FCC2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9713A4E7-9414-45CD-972B-6C47B0BA9163}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9713A4E7-9414-45CD-972B-6C47B0BA9163}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9713A4E7-9414-45CD-972B-6C47B0BA9163}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9713A4E7-9414-45CD-972B-6C47B0BA9163}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

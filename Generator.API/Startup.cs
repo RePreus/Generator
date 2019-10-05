@@ -1,14 +1,21 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using Generator.Application.DTOs;
+using Generator.API.Middleware;
+using Generator.Application.Commands;
+using Generator.Application.Dtos;
 using Generator.Application.Handlers;
+using Generator.Application.Interfaces;
 using Generator.Application.Mapping;
+using Generator.Application.Persistence;
+using Generator.Application.Queries;
 using Generator.Application.Validations;
+using Generator.Infrastructure.Configuration;
+using Generator.Infrastructure.IO;
 using MediatR;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -28,10 +35,18 @@ namespace Generator.API
         {
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddTransient<IValidator<ChoiceDto>, ChoiceDtoValidator>();
+            services.AddOptions();
+            services.Configure<PicturesMessageBusDtoWriterConfiguration>(Configuration.GetSection("FileWriterConfiguration"));
 
+            services.AddScoped<IValidator<SaveChosenPicturesCommand>, SaveChosenPicturesCommandValidator>();
+            services.AddScoped<IValidator<GetRandomPicturesQuery>, GetRandomPicturesQueryValidator>();
+            services.AddScoped<IWriter<PicturesMessageBusDto>, PicturesMessageBusDtoWriter>();
+
+            services.AddDbContext<GeneratorContext>(
+                options => options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
             services.AddAutoMapper(typeof(MappingProfile));
-            services.AddMediatR(typeof(ChoiceHandler));
+            services.AddMediatR(typeof(SaveChosenPicturesCommandHandler));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
         }
 
@@ -41,9 +56,11 @@ namespace Generator.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseGeneratorExceptionMiddleware();
             }
             else
             {
+                app.UseGeneratorExceptionMiddleware();
                 app.UseHsts(); // important
             }
 
