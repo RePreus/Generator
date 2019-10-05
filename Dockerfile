@@ -12,8 +12,10 @@ COPY . .
 WORKDIR "/src/Generator.API"
 RUN dotnet build "Generator.API.csproj" -c Release -o /app
 
-FROM build AS dev
-RUN dotnet test -c Release --logger "trx;LogFileName=testresults.trx"
+FROM build AS testrunner
+WORKDIR /src
+COPY ["Generator.UnitTests/Generator.UnitTests.csproj", "Generator.UnitTests/"]
+ENTRYPOINT ["dotnet", "test", "--logger:trx;LogFilename=results.trx"]
 
 FROM build AS publish
 RUN dotnet publish "Generator.API.csproj" -c Release -o /app
