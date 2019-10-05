@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Generator.Application.Commands;
@@ -15,9 +16,9 @@ namespace Generator.Application.Handlers
     {
         private readonly IMapper mapper;
         private readonly GeneratorContext context;
-        private readonly IWriter<UserChoice> writer;
+        private readonly IWriter<PicturesMessageBusDto> writer;
 
-        public SaveChosenPicturesCommandHandler(IMapper mapper, GeneratorContext context, IWriter<UserChoice> writer)
+        public SaveChosenPicturesCommandHandler(IMapper mapper, GeneratorContext context, IWriter<PicturesMessageBusDto> writer)
         {
             this.mapper = mapper;
             this.context = context;
@@ -35,7 +36,7 @@ namespace Generator.Application.Handlers
             PicturesMessageBusDto payload = new PicturesMessageBusDto(
                 context.Pictures.Find(choice.ChosenPictureId).Image,
                 context.Pictures.Find(choice.OtherPictureId).Image);
-            await writer.Save(choice);
+            await writer.Save(payload);
         }
     }
 }

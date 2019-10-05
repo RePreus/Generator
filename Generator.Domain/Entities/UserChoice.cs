@@ -10,8 +10,8 @@ namespace Generator.Domain.Entities
             ChosenPictureId = chosenPictureId;
             OtherPictureId = otherPictureId;
         }
-        public Guid ChosenPictureId { get; }
+        public Guid ChosenPictureId { get; private set; }
 
-        public Guid OtherPictureId { get; }
+        public Guid OtherPictureId { get; private set; }
     }
 }
