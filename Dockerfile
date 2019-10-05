@@ -1,7 +1,5 @@
 FROM mcr.microsoft.com/dotnet/core/aspnet:2.1-stretch-slim AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:2.1-stretch AS build
 WORKDIR /src
@@ -14,10 +12,15 @@ COPY . .
 WORKDIR "/src/Generator.API"
 RUN dotnet build "Generator.API.csproj" -c Release -o /app
 
+FROM build AS dev
+RUN dotnet test -c Release --logger "trx;LogFileName=testresults.trx"
+
 FROM build AS publish
 RUN dotnet publish "Generator.API.csproj" -c Release -o /app
 
-FROM base AS final
+FROM base AS prod
 WORKDIR /app
+EXPOSE 80
+EXPOSE 443
 COPY --from=publish /app .
 ENTRYPOINT ["dotnet", "Generator.API.dll"]
