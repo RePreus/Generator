@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28922.388
@@ -16,6 +16,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.API", "Generator.API\Generator.API.csproj", "{371B8FB4-AB9A-4031-A43F-5A3FAB0FCC2E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.Infrastructure", "Generator.Infrastructure\Generator.Infrastructure.csproj", "{9713A4E7-9414-45CD-972B-6C47B0BA9163}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.UnitTests", "Generator.UnitTests\Generator.UnitTests.csproj", "{C6395559-D3CA-4274-91D2-E06E13B0E03F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{9713A4E7-9414-45CD-972B-6C47B0BA9163}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9713A4E7-9414-45CD-972B-6C47B0BA9163}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9713A4E7-9414-45CD-972B-6C47B0BA9163}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6395559-D3CA-4274-91D2-E06E13B0E03F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6395559-D3CA-4274-91D2-E06E13B0E03F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6395559-D3CA-4274-91D2-E06E13B0E03F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6395559-D3CA-4274-91D2-E06E13B0E03F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
