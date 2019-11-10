@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ using MediatR;
 
 namespace Generator.Application.Handlers
 {
-    public class GetRandomPicturesQueryHandler : IRequestHandler<GetRandomPicturesQuery, RandomPicturesResponseDto>
+    public class GetRandomPicturesQueryHandler : IRequestHandler<GetRandomPicturesQuery, List<PictureDto>>
     {
         private readonly GeneratorContext context;
         private readonly IMapper mapper;
@@ -21,13 +22,13 @@ namespace Generator.Application.Handlers
             this.mapper = mapper;
         }
 
-        public Task<RandomPicturesResponseDto> Handle(GetRandomPicturesQuery query, CancellationToken token)
+        public Task<List<PictureDto>> Handle(GetRandomPicturesQuery query, CancellationToken token)
         {
             var pictures = context.Pictures.Where(e =>
                     context.Pictures.Select(x => x.Id).OrderBy(r => Guid.NewGuid()).Take(2).Contains(e.Id)).ToList();
             var pictureDtoA = mapper.Map<PictureDto>(pictures[0]);
             var pictureDtoB = mapper.Map<PictureDto>(pictures[1]);
-            return Task.FromResult(new RandomPicturesResponseDto(pictureDtoA, pictureDtoB));
+            return Task.FromResult(new List<PictureDto>() { pictureDtoA, pictureDtoB });
         }
     }
 }
