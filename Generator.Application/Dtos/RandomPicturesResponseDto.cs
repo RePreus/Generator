@@ -1,15 +1,14 @@
-﻿namespace Generator.Application.Dtos
+﻿using System.Collections.Generic;
+
+namespace Generator.Application.Dtos
 {
     public class RandomPicturesResponseDto
     {
         public RandomPicturesResponseDto(PictureDto pictureDtoA, PictureDto pictureDtoB)
         {
-            PictureDtoA = pictureDtoA;
-            PictureDtoB = pictureDtoB;
+            Pictures = new List<PictureDto>() { pictureDtoA, pictureDtoB };
         }
 
-        public PictureDto PictureDtoA { get; }
-
-        public PictureDto PictureDtoB { get; }
+        public List<PictureDto> Pictures { get; }
     }
 }
