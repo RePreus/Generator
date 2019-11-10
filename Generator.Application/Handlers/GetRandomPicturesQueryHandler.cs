@@ -23,7 +23,8 @@ namespace Generator.Application.Handlers
 
         public Task<RandomPicturesResponseDto> Handle(GetRandomPicturesQuery query, CancellationToken token)
         {
-            var pictures = context.Pictures.OrderBy(r => Guid.NewGuid()).Take(2).ToList();
+            var pictures = context.Pictures.Where(e =>
+                    context.Pictures.Select(x => x.Id).OrderBy(r => Guid.NewGuid()).Take(2).Contains(e.Id)).ToList();
             var pictureDtoA = mapper.Map<PictureDto>(pictures[0]);
             var pictureDtoB = mapper.Map<PictureDto>(pictures[1]);
             return Task.FromResult(new RandomPicturesResponseDto(pictureDtoA, pictureDtoB));
