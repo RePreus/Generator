@@ -43,8 +43,8 @@ namespace Generator.UnitTests
 
             // Act
             var result = await handler.Handle(query, CancellationToken.None);
-            var image2 = result.PictureDtoB.Image;
-            var image1 = result.PictureDtoA.Image;
+            var image2 = result[0].Image;
+            var image1 = result[1].Image;
 
             // Assert
             Assert.True(image1 == "image1" || image1 == "image2");
