@@ -1,11 +1,9 @@
-using System;
+using IdentityServer4.Models;
 
 namespace Generator.Identity.Models
 {
     public class ErrorViewModel
     {
-        public string RequestId { get; set; }
-
-        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+        public ErrorMessage Error { get; set; }
     }
 }

@@ -1,7 +1,7 @@
-﻿using IdentityServer4;
-using IdentityServer4.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Security.Claims;
+using IdentityServer4;
+using IdentityServer4.Models;
 
 namespace Generator.Identity
 {
@@ -9,27 +9,20 @@ namespace Generator.Identity
     {
         public static IEnumerable<IdentityResource> GetIdentityResources()
         {
-            var discordResource = new IdentityResource("discord", "Discord User Information",
-                new List<string> { ClaimTypes.NameIdentifier, "urn:discord:avatar", "urn:discord:discriminator" });
+            var googleResource = new IdentityResource("google", "Google User Information",
+                new List<string> { ClaimTypes.NameIdentifier, ClaimTypes.Name, ClaimTypes.Email, "urn:google:profile" });
             return new IdentityResource[]
             {
                 new IdentityResources.OpenId(),
-                discordResource
+                googleResource,
             };
         }
 
         public static IEnumerable<ApiResource> GetApis()
         {
-            var makise = new ApiResource("makise", "MakiseSharp")
-            {
-                UserClaims = new List<string>
-                {
-                    "discord"
-                }
-            };
             return new List<ApiResource>
             {
-                makise
+                new ApiResource("wyro","Wyro API"),
             };
         }
 
@@ -39,34 +32,31 @@ namespace Generator.Identity
             {
                 new Client
                 {
-                    ClientId = "pkce_client",
-                    ClientName = "Test Client",
-                    
+                    ClientId = "dashboard",
+                    ClientName = "Wyro dashboard",
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256()),
+                    },
                     AllowedGrantTypes = GrantTypes.Code,
-                    //ClientSecrets =
-                    //{
-                    //    new Secret("chuj".Sha256())
-                    //},
-                    AllowAccessTokensViaBrowser = true,
-                    RequireClientSecret = false,
                     EnableLocalLogin = false,
-                    RequireConsent = true,
+                    RequireConsent = false,
                     AlwaysIncludeUserClaimsInIdToken = true,
                     RequirePkce = true,
 
 
-                    IdentityProviderRestrictions = { "Google"},
-                    PostLogoutRedirectUris = { "https://makise.club" },
-                    RedirectUris =           { "https://localhost:44362/external/callback" },
-                    //AllowedCorsOrigins =     { "https://localhost:5000" },
+                    IdentityProviderRestrictions = { "Google" },
+                    PostLogoutRedirectUris = { "https://localhost:44362 " },
+                    RedirectUris = { "https://localhost:44362/dashboard/callback" },
+                    AllowedCorsOrigins =     { "https://localhost:44362" },
 
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
-                        "discord",
-                        "makise"
-                    }
-                }
+                        "google",
+                        "wyro",
+                    },
+                },
             };
         }
     }

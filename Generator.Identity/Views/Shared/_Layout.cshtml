@@ -1,48 +1,69 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@using System
+@using System.Linq
+@using IdentityServer4.Extensions
+@{
+    string name = null;
+    Uri avatar = null;
+    string tag = null;
+    if (Context.User.IsAuthenticated())
+    {
+        name = Context.User.GetDisplayName();
+    }
+}
+<!DOCTYPE html>
+<html>
 <head>
     <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="author" content="Hebiame, Kenstin">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Generator.Identity</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <meta name="theme-color" content="#bc262f">
+    <title>Wyro</title>
+    <link rel="icon" type="image/x-icon" href="~/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Generator.Identity</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+        <nav class="navbar navbar-dark navbar-expand-md fixed-top p-0">
+            <a asp-action="Index" asp-controller="Home" class="navbar-brand py-2 pl-3 pl-md-5">
+                <img src="~/logo.svg" class="logo d-none d-md-block" alt="logo">
+                <img src="~/logo-mobile.svg" class="logo d-block d-md-none" alt="logo">
+            </a>
+            @if (!string.IsNullOrWhiteSpace(name))
+            {
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#hide-content">
+                    <span class="navbar-toggler-icon custom-toggler"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            }
+            <section id="hide-content" class="collapse navbar-collapse h-100">
+                @if (!string.IsNullOrWhiteSpace(name))
+                {
+                    <div class="navbar-nav navbar-dark d-block d-md-flex h-100 pb-1 pb-md-0 ml-auto dropdown">
+                        <button class="dropdown-toggle d-inline-block h-100 w-100 text-left pl-3 pr-2 pt-1 pt-md-0 border-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="d-inline-block pr-1"><img src="@avatar" alt="avatar" class="user-avatar" /></div>
+                            <div class="d-inline-block user-name">
+                                <ul class="list-unstyled d-inline-block pr-1 text-left">
+                                    <li>@name</li>
+                                    <li>@tag</li>
+                                </ul>
+                            </div>
+                        </button>
+                        <div class="user-menu dropdown-menu w-100 m-0 rounded-0 border-0" aria-labelledby="dropdownMenuButton">
+                            <a class="pl-1 py-1 dropdown-item" asp-action="Logout" asp-controller="Account"><img src="~/logout.svg" alt="logout icon" width="23" class="ml-3 mr-2" />Logout</a>
+                        </div>
+                    </div>
+                }
+            </section>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2019 - Generator.Identity - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", required: false)
+    <main class="container-fluid vw-100 p-0">
+        @RenderBody()
+    </main>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    @RenderSection("scripts", required: false)
 </body>
 </html>

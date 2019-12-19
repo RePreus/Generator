@@ -11,6 +11,7 @@ using Generator.Application.Queries;
 using Generator.Application.Validations;
 using Generator.Infrastructure.Configuration;
 using Generator.Infrastructure.IO;
+using IdentityServer4.AccessTokenValidation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,6 +38,11 @@ namespace Generator.API
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddOptions();
+            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
+                .AddIdentityServerAuthentication(options =>
+                {
+                    options.Authority = "https://localhost:44362";
+                });
             services.Configure<PicturesMessageBusDtoWriterConfiguration>(Configuration.GetSection("FileWriterConfiguration"));
 
             services.AddScoped<IValidator<SaveChosenPicturesCommand>, SaveChosenPicturesCommandValidator>();
