@@ -1,0 +1,21 @@
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.0-buster-slim AS base
+WORKDIR /app
+
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0-buster AS build
+WORKDIR /src
+COPY ["Generator.Identity/Generator.Identity.csproj", "Generator.Identity/"]
+COPY ["Generator.Domain/Generator.Domain.csproj", "Generator.Domain/"]
+RUN dotnet restore "Generator.Identity/Generator.Identity.csproj"
+COPY . .
+WORKDIR "/src/Generator.Identity"
+RUN dotnet build "Generator.Identity.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "Generator.Identity.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "Generator.Identity.dll"]

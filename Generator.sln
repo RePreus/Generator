@@ -5,6 +5,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{161DF18E-B422-4F87-8F8B-ED38E34D5E62}"
 	ProjectSection(SolutionItems) = preProject
 		Dockerfile = Dockerfile
+		DockerfileIdentity = DockerfileIdentity
 		RuleSet.ruleset = RuleSet.ruleset
 	EndProjectSection
 EndProject
@@ -18,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.Infrastructure", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.UnitTests", "Generator.UnitTests\Generator.UnitTests.csproj", "{C6395559-D3CA-4274-91D2-E06E13B0E03F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Identity", "Generator.Identity\Generator.Identity.csproj", "{495C8B75-08EB-4985-B0D6-15B197B7E255}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.Identity", "Generator.Identity\Generator.Identity.csproj", "{495C8B75-08EB-4985-B0D6-15B197B7E255}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
