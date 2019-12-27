@@ -43,6 +43,7 @@ namespace Generator.Identity
                     RequireConsent = false,
                     AlwaysIncludeUserClaimsInIdToken = true,
                     RequirePkce = true,
+                    RequireClientSecret = false,
 
 
                     IdentityProviderRestrictions = { "Google" },

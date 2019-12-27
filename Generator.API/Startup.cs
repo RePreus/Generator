@@ -41,7 +41,7 @@ namespace Generator.API
             services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
                 .AddIdentityServerAuthentication(options =>
                 {
-                    options.Authority = "https://localhost:44362";
+                    options.Authority = Configuration["Authorization:Authority"];
                 });
             services.Configure<PicturesMessageBusDtoWriterConfiguration>(Configuration.GetSection("FileWriterConfiguration"));
 

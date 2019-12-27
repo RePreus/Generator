@@ -4,7 +4,6 @@
     {
         public GoogleSettings Google { get; set; }
 
-        // public TokenSettings Token { get; set; }
         public SiteSettings Site { get; set; }
     }
 }
