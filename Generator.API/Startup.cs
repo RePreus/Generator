@@ -72,8 +72,11 @@ namespace Generator.API
             }
 
             app.UseRouting();
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+
+            app.UseAuthorization();
             app.UseAuthentication();
+
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }

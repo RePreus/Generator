@@ -22,7 +22,7 @@ namespace Generator.Identity
         {
             return new List<ApiResource>
             {
-                new ApiResource("wyro","Wyro API"),
+                new ApiResource("wyro", "Wyro API"),
             };
         }
 
@@ -45,11 +45,10 @@ namespace Generator.Identity
                     RequirePkce = true,
                     RequireClientSecret = false,
 
-
                     IdentityProviderRestrictions = { "Google" },
-                    PostLogoutRedirectUris = { "https://localhost:44362 " },
-                    RedirectUris = { "https://localhost:44362/dashboard/callback" },
-                    AllowedCorsOrigins =     { "https://localhost:44362" },
+                    PostLogoutRedirectUris = { "https://wyro.hebia.me" },
+                    RedirectUris = { "https://wyro.hebia.me/dashboard/callback" },
+                    AllowedCorsOrigins =     { "http://localhost:5000" },
 
                     AllowedScopes =
                     {

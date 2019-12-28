@@ -4,12 +4,14 @@ using Generator.Application.Commands;
 using Generator.Application.Dtos;
 using Generator.Application.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Generator.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class PicturesController : ControllerBase
     {
         private readonly IMediator mediator;
