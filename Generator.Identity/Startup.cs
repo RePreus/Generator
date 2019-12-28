@@ -35,7 +35,8 @@ namespace Generator.Identity
             Configuration.GetSection("AppSettings").Bind(settings);
             services.AddSingleton(settings);
 
-            var builder = services.AddIdentityServer();
+            var builder = services.AddIdentityServer(
+                options => options.PublicOrigin = settings.Site.PublicOrigin.ToString());
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
             services.AddEntityFrameworkSqlServer();
