@@ -36,10 +36,7 @@ namespace Generator.Identity
             services.AddSingleton(settings);
 
             var builder = services.AddIdentityServer(
-                options =>
-                {
-                    options.PublicOrigin = "https://identity.wyro.hebia.me";
-                });
+                options => options.PublicOrigin = settings.Site.PublicOrigin.ToString());
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
             services.AddEntityFrameworkSqlServer();
