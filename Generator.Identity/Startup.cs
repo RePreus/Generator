@@ -1,4 +1,3 @@
-using System;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using Generator.Identity.Models.Settings;
@@ -38,11 +37,6 @@ namespace Generator.Identity
 
             var builder = services.AddIdentityServer(
                 options => options.PublicOrigin = settings.Site.PublicOrigin.ToString());
-            Console.WriteLine(settings.Site.PublicOrigin.ToString());
-            Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
             services.AddEntityFrameworkSqlServer();
