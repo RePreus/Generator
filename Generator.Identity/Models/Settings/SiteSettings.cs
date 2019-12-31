@@ -6,6 +6,6 @@ namespace Generator.Identity.Models.Settings
     {
         public Uri IndexRedirectTo { get; set; }
 
-        public Uri PublicOrigin { get; set; }
+        public Uri Issuer { get; set; }
     }
 }
