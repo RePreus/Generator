@@ -88,6 +88,7 @@ namespace Generator.Identity
             services.AddAuthentication()
                 .AddGoogle("Google", options =>
                 {
+                    options.CallbackPath = settings.Google.CallbackPath;
                     options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
                     options.SaveTokens = true;
                     options.ClientId = settings.Google.ClientId;
