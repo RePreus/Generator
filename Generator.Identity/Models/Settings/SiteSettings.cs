@@ -4,8 +4,8 @@ namespace Generator.Identity.Models.Settings
 {
     public class SiteSettings
     {
-        public Uri IndexRedirectTo { get; set; }
+        public string IndexRedirectTo { get; set; }
 
-        public Uri Issuer { get; set; }
+        public string PublicOrigin { get; set; }
     }
 }
