@@ -1,4 +1,5 @@
-﻿using Generator.Domain.Entities;
+﻿using Generator.Application.Security;
+using Generator.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Generator.Application.Persistence
@@ -13,5 +14,7 @@ namespace Generator.Application.Persistence
         public DbSet<Picture> Pictures { get; set; }
 
         public DbSet<UserChoice> UserChoices { get; set; }
+
+        public DbSet<SecuredData> SecuredData { get; set; }
     }
 }

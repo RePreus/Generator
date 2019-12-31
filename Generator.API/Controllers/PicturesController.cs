@@ -29,7 +29,7 @@ namespace Generator.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<PictureDto>>> Get([FromQuery]GetRandomPicturesQuery query)
+        public async Task<ActionResult<RandomPicturesResponseDto>> Get([FromQuery]GetRandomPicturesQuery query)
             => await mediator.Send(query);
     }
 }
