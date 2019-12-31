@@ -35,12 +35,7 @@ namespace Generator.Identity
             Configuration.GetSection("AppSettings").Bind(settings);
             services.AddSingleton(settings);
 
-            var builder = services.AddIdentityServer(
-                options =>
-                {
-                    options.IssuerUri = settings.Site.PublicOrigin.ToString();
-                    options.PublicOrigin = settings.Site.PublicOrigin.ToString();
-                });
+            var builder = services.AddIdentityServer();
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
             services.AddEntityFrameworkSqlServer();
@@ -88,7 +83,6 @@ namespace Generator.Identity
             services.AddAuthentication()
                 .AddGoogle("Google", options =>
                 {
-                    options.CallbackPath = settings.Google.CallbackPath;
                     options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
                     options.SaveTokens = true;
                     options.ClientId = settings.Google.ClientId;
