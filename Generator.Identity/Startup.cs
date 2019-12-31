@@ -36,7 +36,11 @@ namespace Generator.Identity
             services.AddSingleton(settings);
 
             var builder = services.AddIdentityServer(
-                options => options.PublicOrigin = settings.Site.PublicOrigin.ToString());
+                options =>
+                {
+                    options.IssuerUri = settings.Site.PublicOrigin.ToString();
+                    options.PublicOrigin = settings.Site.PublicOrigin.ToString();
+                });
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
             services.AddEntityFrameworkSqlServer();
