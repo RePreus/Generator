@@ -8,5 +8,9 @@ namespace Generator.Application.Commands
         public Guid ChosenPictureId { get; set; }
 
         public Guid OtherPictureId { get; set; }
+
+        public Guid UserId { get; set; }
+
+        public string Token { get; set; }
     }
 }

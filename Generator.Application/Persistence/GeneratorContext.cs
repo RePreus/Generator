@@ -1,5 +1,4 @@
-﻿using Generator.Application.Security;
-using Generator.Domain.Entities;
+﻿using Generator.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Generator.Application.Persistence
