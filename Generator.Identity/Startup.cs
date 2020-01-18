@@ -77,8 +77,8 @@ namespace Generator.Identity
 
             services.AddDbContext<UserContext>(
                 options => options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection"), options =>
-                        options.MigrationsAssembly(migrationsAssembly)));
+                    Configuration.GetConnectionString("DefaultConnection"), optionsA =>
+                        optionsA.MigrationsAssembly(migrationsAssembly)));
 
             services.AddAuthentication()
                 .AddGoogle("Google", options =>
