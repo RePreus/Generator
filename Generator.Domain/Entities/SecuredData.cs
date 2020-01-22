@@ -12,10 +12,10 @@ namespace Generator.Domain.Entities
             UserId = userId;
         }
 
-        public string Data { get; set; }
+        public string Data { get; private set; }
 
-        public string Token { get; set; }
+        public string Token { get; private set; }
 
-        public Guid UserId { get; set; }
+        public Guid UserId { get; private set; }
     }
 }
