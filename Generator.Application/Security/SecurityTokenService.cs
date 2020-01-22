@@ -8,11 +8,11 @@ using Generator.Domain.Entities;
 
 namespace Generator.Application.Security
 {
-    public class SecurityToken : ISecurityToken
+    public class SecurityTokenService : ISecurityTokenService
     {
         private readonly GeneratorContext context;
 
-        public SecurityToken(GeneratorContext context) => this.context = context;
+        public SecurityTokenService(GeneratorContext context) => this.context = context;
 
         public async Task<string> SaveDataWithTokenAsync(IEnumerable<string> list, Guid userId)
         {
@@ -28,15 +28,10 @@ namespace Generator.Application.Security
 
         public IList<string> GetSavedData(Guid userId, string token)
         {
-            var securedData = context.SecuredData.Where(o => o.UserId == userId).ToList();
+            var securedData = context.SecuredData.Single(o => o.UserId == userId);
 
-            if (securedData.Count < 1)
-                throw new GeneratorException("User doesn't have any stored tokens");
-            if (securedData.Count > 2)
-                throw new GeneratorException("User has 2 or more stored tokens");
-
-            if (token == securedData.First().Token)
-                return securedData.First().Data.Split(';');
+            if (token == securedData.Token)
+                return securedData.Data.Split(';');
 
             throw new GeneratorException("User Token doesn't match stored one");
         }

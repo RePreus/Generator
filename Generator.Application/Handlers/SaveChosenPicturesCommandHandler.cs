@@ -17,18 +17,18 @@ namespace Generator.Application.Handlers
         private readonly IMapper mapper;
         private readonly GeneratorContext context;
         private readonly IWriter<PicturesMessageBusDto> writer;
-        private readonly ISecurityToken securityToken;
+        private readonly ISecurityTokenService securityTokenService;
 
         public SaveChosenPicturesCommandHandler(
             IMapper mapper,
             GeneratorContext context,
             IWriter<PicturesMessageBusDto> writer,
-            ISecurityToken securityToken)
+            ISecurityTokenService securityTokenService)
         {
             this.mapper = mapper;
             this.context = context;
             this.writer = writer;
-            this.securityToken = securityToken;
+            this.securityTokenService = securityTokenService;
         }
 
         protected override async Task Handle(SaveChosenPicturesCommand request, CancellationToken cancellationToken)
@@ -36,7 +36,7 @@ namespace Generator.Application.Handlers
             if (request.ChosenPictureId == request.OtherPictureId)
                 throw new GeneratorException("Pictures' Ids are the same");
 
-            var data = securityToken.GetSavedData(request.UserId, request.Token);
+            var data = securityTokenService.GetSavedData(request.UserId, request.Token);
             if (!data.Contains(request.ChosenPictureId.ToString()) || !data.Contains(request.OtherPictureId.ToString()))
                 throw new GeneratorException("Pictures' Ids doesn't match pictures to chose from");
 

@@ -50,7 +50,7 @@ namespace Generator.API
             services.AddScoped<IValidator<SaveChosenPicturesCommand>, SaveChosenPicturesCommandValidator>();
             services.AddScoped<IValidator<GetRandomPicturesQuery>, GetRandomPicturesQueryValidator>();
             services.AddScoped<IWriter<PicturesMessageBusDto>, PicturesMessageBusDtoWriter>();
-            services.AddScoped<ISecurityToken, SecurityToken>();
+            services.AddScoped<ISecurityTokenService, SecurityTokenService>();
 
             services.AddDbContext<GeneratorContext>(
                 options => options.UseSqlServer(

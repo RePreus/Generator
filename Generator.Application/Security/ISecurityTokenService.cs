@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Generator.Application.Security
 {
-    public interface ISecurityToken
+    public interface ISecurityTokenService
     {
         Task<string> SaveDataWithTokenAsync(IEnumerable<string> list, Guid userId);
 

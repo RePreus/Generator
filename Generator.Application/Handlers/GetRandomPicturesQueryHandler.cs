@@ -16,13 +16,13 @@ namespace Generator.Application.Handlers
     {
         private readonly GeneratorContext context;
         private readonly IMapper mapper;
-        private readonly ISecurityToken securityToken;
+        private readonly ISecurityTokenService securityTokenService;
 
-        public GetRandomPicturesQueryHandler(GeneratorContext context, IMapper mapper, ISecurityToken securityToken)
+        public GetRandomPicturesQueryHandler(GeneratorContext context, IMapper mapper, ISecurityTokenService securityTokenService)
         {
             this.context = context;
             this.mapper = mapper;
-            this.securityToken = securityToken;
+            this.securityTokenService = securityTokenService;
         }
 
         public async Task<RandomPicturesResponseDto> Handle(GetRandomPicturesQuery query, CancellationToken cancellationToken)
@@ -32,7 +32,7 @@ namespace Generator.Application.Handlers
             var pictureDtoA = mapper.Map<PictureDto>(pictures[0]);
             var pictureDtoB = mapper.Map<PictureDto>(pictures[1]);
 
-            var token = await securityToken.SaveDataWithTokenAsync(
+            var token = await securityTokenService.SaveDataWithTokenAsync(
                 new List<string> { pictureDtoA.Id.ToString(), pictureDtoB.Id.ToString() },
                 query.UserId);
 
