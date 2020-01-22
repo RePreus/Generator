@@ -8,14 +8,11 @@ namespace Generator.UnitTests
         public UserFixture()
         {
             UserId = Guid.NewGuid();
-            RandomToken = Enumerable.Repeat("A", 24).ToString();
+            Token = Enumerable.Repeat("A", 24).ToString();
         }
 
         public Guid UserId { get; }
 
-        public string Token { get; set; }
-
-        public string RandomToken { get; set; }
-
+        public string Token { get; }
     }
 }
