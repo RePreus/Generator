@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Generator.Application.Persistence;
 using Generator.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
