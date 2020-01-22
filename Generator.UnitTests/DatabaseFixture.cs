@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Generator.UnitTests
 {
-    public class DatabaseFixture : IDisposable
+    public class DatabaseFixture
     {
         public DatabaseFixture()
         {
@@ -20,11 +20,6 @@ namespace Generator.UnitTests
             Context.Pictures.Add(pictureA);
             Context.Pictures.Add(pictureB);
             Context.SaveChanges();
-        }
-
-        public void Dispose()
-        {
-            Context.Database.EnsureDeleted();
         }
 
         private void DetachAllEntities()
