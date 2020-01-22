@@ -3,19 +3,23 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Generator.Application.Exceptions;
+using Generator.Application.Persistence;
 using Generator.Application.Security;
+using Microsoft.EntityFrameworkCore;
 using Xunit;
 
 namespace Generator.UnitTests
 {
-    public class SecurityTokenServiceTests : IClassFixture<DatabaseFixture>, IClassFixture<UserFixture>
+    public class SecurityTokenServiceTests : IClassFixture<UserFixture>
     {
-        private readonly DatabaseFixture databaseFixture;
+        private readonly GeneratorContext context;
         private readonly UserFixture userFixture;
 
-        public SecurityTokenServiceTests(DatabaseFixture databaseFixture, UserFixture userFixture)
+        public SecurityTokenServiceTests(UserFixture userFixture)
         {
-            this.databaseFixture = databaseFixture;
+            context = new GeneratorContext(new DbContextOptionsBuilder<GeneratorContext>()
+                .UseInMemoryDatabase(databaseName: "SecurityTokenServiceUnitTests")
+                .Options);
             this.userFixture = userFixture;
         }
 
@@ -23,7 +27,7 @@ namespace Generator.UnitTests
         public void NoTokenStoredTest()
         {
             // Arrange
-            var securityTokenService = new SecurityTokenService(databaseFixture.Context);
+            var securityTokenService = new SecurityTokenService(context);
 
             // Act
             Func<IList<string>> act = () => securityTokenService.GetSavedData(userFixture.UserId, userFixture.Token);
@@ -36,12 +40,12 @@ namespace Generator.UnitTests
         public async Task TokenDoesNotMatchTest()
         {
             // Arrange
-            var securityTokenService = new SecurityTokenService(databaseFixture.Context);
+            var securityTokenService = new SecurityTokenService(context);
             await securityTokenService.SaveDataWithTokenAsync(
                 new List<string>
                 {
-                databaseFixture.PictureIdA.ToString(),
-                databaseFixture.PictureIdB.ToString()
+                    Guid.NewGuid().ToString(),
+                    Guid.NewGuid().ToString()
                 },
                 userFixture.UserId);
 
