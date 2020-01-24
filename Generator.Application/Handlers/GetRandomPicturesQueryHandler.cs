@@ -36,7 +36,7 @@ namespace Generator.Application.Handlers
                 new List<string> { pictureDtoA.Id.ToString(), pictureDtoB.Id.ToString() },
                 query.UserId);
 
-            return await Task.FromResult(new RandomPicturesResponseDto(pictureDtoA, pictureDtoB, token));
+            return new RandomPicturesResponseDto(pictureDtoA, pictureDtoB, token);
         }
     }
 }
