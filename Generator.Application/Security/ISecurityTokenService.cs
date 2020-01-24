@@ -8,6 +8,6 @@ namespace Generator.Application.Security
     {
         Task<string> SaveDataWithTokenAsync(IEnumerable<string> list, Guid userId);
 
-        IList<string> GetSavedData(Guid userId, string token);
+        Task<IList<string>> GetSavedData(Guid userId, string token);
     }
 }

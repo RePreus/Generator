@@ -36,7 +36,7 @@ namespace Generator.Application.Handlers
             if (request.ChosenPictureId == request.OtherPictureId)
                 throw new GeneratorException("Pictures' Ids are the same");
 
-            var data = securityTokenService.GetSavedData(request.UserId, request.Token);
+            var data = await securityTokenService.GetSavedData(request.UserId, request.Token);
             if (!data.Contains(request.ChosenPictureId.ToString()) || !data.Contains(request.OtherPictureId.ToString()))
                 throw new GeneratorException("Pictures' Ids doesn't match pictures to chose from");
 

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Generator.Application.Exceptions;
 using Generator.Application.Persistence;
 using Generator.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Generator.Application.Security
 {
@@ -26,9 +27,9 @@ namespace Generator.Application.Security
             return token;
         }
 
-        public IList<string> GetSavedData(Guid userId, string token)
+        public async Task<IList<string>> GetSavedData(Guid userId, string token)
         {
-            var securedData = context.SecuredData.Single(o => o.UserId == userId);
+            var securedData = await context.SecuredData.SingleAsync(o => o.UserId == userId);
 
             if (token == securedData.Token)
                 return securedData.Data.Split(';');
@@ -36,15 +37,15 @@ namespace Generator.Application.Security
             throw new GeneratorException("User Token doesn't match stored one");
         }
 
-        private string GenerateToken()
+        private static string GenerateToken()
         {
             var rand = new Random();
-            var tmptoken = string.Empty;
+            var token = string.Empty;
 
-            while (tmptoken.Length <= 24)
-                tmptoken += (char)rand.Next(48, 91);
+            while (token.Length <= 24)
+                token += (char)rand.Next(48, 91);
 
-            return tmptoken;
+            return token;
         }
     }
 }
