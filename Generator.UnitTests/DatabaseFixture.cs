@@ -22,18 +22,6 @@ namespace Generator.UnitTests
             Context.SaveChanges();
         }
 
-        private void DetachAllEntities()
-        {
-            var changedEntriesCopy = Context.ChangeTracker.Entries()
-                .Where(e => e.State == EntityState.Added ||
-                            e.State == EntityState.Modified ||
-                            e.State == EntityState.Deleted)
-                .ToList();
-
-            foreach (var entry in changedEntriesCopy)
-                entry.State = EntityState.Detached;
-        }
-
         public GeneratorContext Context { get; }
 
         public Guid PictureIdA { get; }
