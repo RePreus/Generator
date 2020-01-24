@@ -35,6 +35,7 @@ namespace Generator.API.Controllers
             var sub = User.Claims.Where(c => c.Type == "sub").Select(c => c.Value).SingleOrDefault();
             if (string.IsNullOrWhiteSpace(sub))
                 throw new GeneratorException("Missing 'sub' claim");
+
             return await mediator.Send(query);
         }
     }
