@@ -18,16 +18,14 @@ using Xunit;
 
 namespace Generator.UnitTests
 {
-    public class HandlersTests : IClassFixture<UserFixture>, IClassFixture<DatabaseFixture>
+    public class HandlersTests : IClassFixture<DatabaseFixture>
     {
         private readonly DatabaseFixture databaseFixture;
         private readonly ISecurityTokenService securityTokenService;
-        private readonly UserFixture userFixture;
         private readonly IWriter<PicturesMessageBusDto> mockWriter;
 
-        public HandlersTests(UserFixture userFixture, DatabaseFixture databaseFixture)
+        public HandlersTests(DatabaseFixture databaseFixture)
         {
-            this.userFixture = userFixture;
             this.databaseFixture = databaseFixture;
             securityTokenService = Substitute.For<ISecurityTokenService>();
             securityTokenService
@@ -37,12 +35,12 @@ namespace Generator.UnitTests
                         databaseFixture.PictureIdA.ToString(),
                         databaseFixture.PictureIdB.ToString()
                     },
-                    userFixture.UserId)
-                .Returns(userFixture.Token);
+                    Arg.Any<Guid>())
+                .Returns(string.Empty);
             securityTokenService
                 .GetSavedData(
-                    userFixture.UserId,
-                    userFixture.Token)
+                    Arg.Any<Guid>(),
+                    string.Empty)
                 .Returns(new List<string>
                 {
                     databaseFixture.PictureIdA.ToString(),
@@ -57,7 +55,7 @@ namespace Generator.UnitTests
         {
             // Arrange
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Picture, PictureDto>()).CreateMapper();
-            var query = new GetRandomPicturesQuery { GroupName = "test", UserId = userFixture.UserId };
+            var query = new GetRandomPicturesQuery { GroupName = "test", UserId = Guid.NewGuid() };
             var handler = new GetRandomPicturesQueryHandler(databaseFixture.Context, mapper, securityTokenService);
 
             // Act
@@ -71,17 +69,17 @@ namespace Generator.UnitTests
         }
 
         [Fact]
-        public async Task SavedDataDoesNotMatchTest()
+        public async Task ThrowExceptionWhenSavedDataDoesNotMatchTest()
         {
             // Arrange
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<SaveChosenPicturesCommand, UserChoice>()).CreateMapper();
-            var command = new SaveChosenPicturesCommand { ChosenPictureId = databaseFixture.PictureIdA, OtherPictureId = Guid.NewGuid(), UserId = userFixture.UserId, Token = userFixture.Token };
+            var command = new SaveChosenPicturesCommand { ChosenPictureId = databaseFixture.PictureIdA, OtherPictureId = Guid.NewGuid(), UserId = Guid.NewGuid(), Token = string.Empty };
             IRequestHandler<SaveChosenPicturesCommand> handler = new SaveChosenPicturesCommandHandler(mapper, databaseFixture.Context, mockWriter, securityTokenService);
 
             // Act
             Func<Task> act = async () => await handler.Handle(command, CancellationToken.None);
 
-            // Act & Assert
+            // Assert
             await act.Should().ThrowAsync<GeneratorException>()
                 .WithMessage("Pictures' Ids doesn't match pictures to chose from");
         }
@@ -91,28 +89,28 @@ namespace Generator.UnitTests
         {
             // Arrange
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<SaveChosenPicturesCommand, UserChoice>()).CreateMapper();
-            var command = new SaveChosenPicturesCommand { ChosenPictureId = databaseFixture.PictureIdA, OtherPictureId = databaseFixture.PictureIdB, UserId = userFixture.UserId, Token = userFixture.Token };
+            var command = new SaveChosenPicturesCommand { ChosenPictureId = databaseFixture.PictureIdA, OtherPictureId = databaseFixture.PictureIdB, UserId = Guid.NewGuid(), Token = string.Empty };
             IRequestHandler<SaveChosenPicturesCommand> handler = new SaveChosenPicturesCommandHandler(mapper, databaseFixture.Context, mockWriter, securityTokenService);
 
             // Act
             await handler.Handle(command, CancellationToken.None);
 
             // Assert
-            await mockWriter.Received(1).Save(Arg.Any<PicturesMessageBusDto>());
+            await mockWriter.Received().Save(Arg.Any<PicturesMessageBusDto>());
         }
 
         [Fact]
-        public async Task ReceivedIdenticalPicturesTest()
+        public async Task ThrowExceptionWhenPicturesAreIdenticalTest()
         {
             // Arrange
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<SaveChosenPicturesCommand, UserChoice>()).CreateMapper();
-            var command = new SaveChosenPicturesCommand { ChosenPictureId = databaseFixture.PictureIdA, OtherPictureId = databaseFixture.PictureIdA, UserId = userFixture.UserId, Token = userFixture.Token };
+            var command = new SaveChosenPicturesCommand { ChosenPictureId = databaseFixture.PictureIdA, OtherPictureId = databaseFixture.PictureIdA, UserId = Guid.NewGuid(), Token = string.Empty };
             IRequestHandler<SaveChosenPicturesCommand> handler = new SaveChosenPicturesCommandHandler(mapper, databaseFixture.Context, mockWriter, securityTokenService);
 
             // Act
             Func<Task> act = async () => await handler.Handle(command, CancellationToken.None);
 
-            // Act & Assert
+            // Assert
             await act.Should().ThrowAsync<GeneratorException>().WithMessage("Pictures' Ids are the same");
         }
     }

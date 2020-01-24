@@ -10,36 +10,35 @@ using Xunit;
 
 namespace Generator.UnitTests
 {
-    public class SecurityTokenServiceTests : IClassFixture<UserFixture>
+    public class SecurityTokenServiceTests
     {
         private readonly GeneratorContext context;
-        private readonly UserFixture userFixture;
 
-        public SecurityTokenServiceTests(UserFixture userFixture)
+        public SecurityTokenServiceTests()
         {
             context = new GeneratorContext(new DbContextOptionsBuilder<GeneratorContext>()
                 .UseInMemoryDatabase(databaseName: "SecurityTokenServiceUnitTests")
                 .Options);
-            this.userFixture = userFixture;
         }
 
         [Fact]
-        public void NoTokenStoredTest()
+        public async Task ThrowExceptionWhenNoTokenStoredTest()
         {
             // Arrange
             var securityTokenService = new SecurityTokenService(context);
 
             // Act
-            Func<IList<string>> act = () => securityTokenService.GetSavedData(userFixture.UserId, userFixture.Token);
+            Func<Task<IList<string>>> act = async () => await securityTokenService.GetSavedData(Guid.NewGuid(), string.Empty);
 
             // Assert
-            act.Should().Throw<InvalidOperationException>().WithMessage("Sequence contains no elements");
+            await act.Should().ThrowAsync<InvalidOperationException>().WithMessage("Sequence contains no elements");
         }
 
         [Fact]
-        public async Task TokenDoesNotMatchTest()
+        public async Task ThrowExceptionWhenTokenDoesNotMatchTest()
         {
             // Arrange
+            var userId = Guid.NewGuid();
             var securityTokenService = new SecurityTokenService(context);
             await securityTokenService.SaveDataWithTokenAsync(
                 new List<string>
@@ -47,13 +46,13 @@ namespace Generator.UnitTests
                     Guid.NewGuid().ToString(),
                     Guid.NewGuid().ToString()
                 },
-                userFixture.UserId);
+                userId);
 
             // Act
-            Func<IList<string>> act = () => securityTokenService.GetSavedData(userFixture.UserId, userFixture.Token);
+            Func<Task<IList<string>>> act = async () => await securityTokenService.GetSavedData(userId, string.Empty);
 
             // Assert
-            act.Should().Throw<GeneratorException>().WithMessage("User Token doesn't match stored one");
+            await act.Should().ThrowAsync<GeneratorException>().WithMessage("User Token doesn't match stored one");
         }
     }
 }
