@@ -9,6 +9,7 @@ using Generator.Application.Persistence;
 using Generator.Application.Queries;
 using Generator.Application.Security;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Generator.Application.Handlers
 {
@@ -27,8 +28,8 @@ namespace Generator.Application.Handlers
 
         public async Task<RandomPicturesResponseDto> Handle(GetRandomPicturesQuery query, CancellationToken cancellationToken)
         {
-            var pictures = context.Pictures.Where(e =>
-                    context.Pictures.Select(x => x.Id).OrderBy(r => Guid.NewGuid()).Take(2).Contains(e.Id)).ToList();
+            var pictures = await context.Pictures.Where(e =>
+                    context.Pictures.Select(x => x.Id).OrderBy(r => Guid.NewGuid()).Take(2).Contains(e.Id)).ToListAsync(cancellationToken);
             var pictureDtoA = mapper.Map<PictureDto>(pictures[0]);
             var pictureDtoB = mapper.Map<PictureDto>(pictures[1]);
 

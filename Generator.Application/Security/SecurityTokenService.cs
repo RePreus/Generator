@@ -17,7 +17,7 @@ namespace Generator.Application.Security
 
         public async Task<string> SaveDataWithTokenAsync(IEnumerable<string> list, Guid userId)
         {
-            if (context.SecuredData.Where(o => o.UserId == userId).ToList() is var removeList && removeList.Any())
+            if (await context.SecuredData.Where(o => o.UserId == userId).ToListAsync() is var removeList && removeList.Any())
                 context.SecuredData.RemoveRange(removeList);
 
             var token = GenerateToken();
