@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Generator.Application.Commands;
 using Generator.Application.Dtos;
+using Generator.Application.Exceptions;
 using Generator.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -29,7 +30,13 @@ namespace Generator.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<PictureDto>>> Get([FromQuery]GetRandomPicturesQuery query)
-            => await mediator.Send(query);
+        public async Task<ActionResult<RandomPicturesResponseDto>> Get([FromQuery] GetRandomPicturesQuery query)
+        {
+            var sub = User.Claims.Where(c => c.Type == "sub").Select(c => c.Value).SingleOrDefault();
+            if (string.IsNullOrWhiteSpace(sub))
+                throw new GeneratorException("Missing 'sub' claim");
+
+            return await mediator.Send(query);
+        }
     }
 }

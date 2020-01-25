@@ -8,6 +8,7 @@ using Generator.Application.Interfaces;
 using Generator.Application.Mapping;
 using Generator.Application.Persistence;
 using Generator.Application.Queries;
+using Generator.Application.Security;
 using Generator.Application.Validations;
 using Generator.Infrastructure.Configuration;
 using Generator.Infrastructure.IO;
@@ -38,16 +39,18 @@ namespace Generator.API
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddOptions();
+
             services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
-                .AddIdentityServerAuthentication(options =>
-                {
-                    options.Authority = Configuration["Authorization:Authority"];
-                });
+               .AddIdentityServerAuthentication(options =>
+               {
+                   options.Authority = Configuration["Authorization:Authority"];
+               });
             services.Configure<PicturesMessageBusDtoWriterConfiguration>(Configuration.GetSection("FileWriterConfiguration"));
 
             services.AddScoped<IValidator<SaveChosenPicturesCommand>, SaveChosenPicturesCommandValidator>();
             services.AddScoped<IValidator<GetRandomPicturesQuery>, GetRandomPicturesQueryValidator>();
             services.AddScoped<IWriter<PicturesMessageBusDto>, PicturesMessageBusDtoWriter>();
+            services.AddScoped<ISecurityTokenService, SecurityTokenService>();
 
             services.AddDbContext<GeneratorContext>(
                 options => options.UseSqlServer(
